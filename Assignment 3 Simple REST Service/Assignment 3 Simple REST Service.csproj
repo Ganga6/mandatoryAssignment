@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RootNamespace>RESTService</RootNamespace>
+    <AssemblyName>Simple REST Service</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BookLib\BookLib\BookLib.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,30 @@
+body {
+	display: flex;
+	flex-direction: column;
+}
+
+#content
+{
+	margin: 2em;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+}
+
+#result {
+	margin: 2em;
+	border: 1px #000;
+	border-radius: 2px;
+	box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.55);
+	div{
+		padding: .5em;
+		span {
+			margin: .5em;
+			border: 1px #000
+		}
+
+		&:nth-child(even) {
+			background-color: orange;
+		}
+	}
+}
