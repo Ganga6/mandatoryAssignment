@@ -6,9 +6,8 @@ interface Value {
 }
 
 let arrOfValues: Value[] = [];
-
 let RunFunc = () => {
-	let index: int = arrOfValues.length;
+	let index: number = arrOfValues.length;
 	if (!index) {
 		index = 1;
 	} else {
@@ -17,14 +16,7 @@ let RunFunc = () => {
 	let el = getEl("input");
 	let selector = getEl("select");
 	let val = el.value;
-	switch(selector.options.selectedIndex){
-		case 0:
-			val = val.toUpperCase();
-			break;
-		case 1:
-			val = val.toLowerCase();
-			break;
-	}
+	val = selector.options.selectedIndex === 0 ? val.toUpperCase() : val.toLowerCase();
 	arrOfValues.push({Id: index, Value: val });
 	let divWrapper = document.createElement("div");
 	divWrapper.classList.add('value');

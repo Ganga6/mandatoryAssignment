@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -12,15 +12,9 @@ namespace TcpServer
     class Server
     {
         TcpListener server = null;
-        private List<Book> BooksList = new List<Book>
-        {
-            new Book("Book Title", "Author Name", 200, "1111111111111"),
-            new Book("Book Title 1", "Author Name 1", 21, "1111111111112"),
-            new Book("Book Title 2", "Author Name 2", 440, "1111111111123"),
-            new Book("Book Title 3", "Author Name 3", 10, "1111111111234"),
-            new Book("Book Title 4", "Author Name 4", 800, "1111111112345"),
-            new Book("Book Title 5", "Author Name 5", 80, "1111111123456"),
-        };
+        Singleton SingletonStore = Singleton.GetInstance;
+		List<Book> BooksList = SingletonStore.BooksList;
+				
         public Server(string ip, int port)
         {
             server = new TcpListener(IPAddress.Parse(ip), port);
@@ -90,11 +84,21 @@ namespace TcpServer
                         JsonSerializer.Serialize(BooksList.Find(x => x.ISBN13 == commands[1]));
                     break;
                 case "save":
-                    //TODO: Make sure the ISBN is actually unique
                     if(string.IsNullOrEmpty(commands[1])) {
                         responseMsg = "You need to provide additional Parameters (Get <ISBN_Number>)";
                     }
-                    BooksList.Add(JsonSerializer.Deserialize<Book>(commands[1]));
+										try {
+												Book book = JsonSerializer.Deserialize<Book>(commands[1]);
+												book.Validate();
+												if(BooksList.Find(x => x.ISBN13 == commands[1]) != null) {
+														responseMsg = "Book with that ISBN already exists!";
+												} else {
+														BooksList.Add(book);
+												}
+										}
+										catch (ArgumentException e) {
+												responseMsg = e.ToString();
+										}                    
                     break;
                 case "?":
                     responseMsg = "Aviable Commands: GetAll, Get, Save";
